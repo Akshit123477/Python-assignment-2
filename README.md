@@ -1,0 +1,131 @@
+# -----------------------------------------------------------
+# Title: GradeBook Analyzer
+# Course: Programming for Problem Solving using Python
+# Author: Akshit Sharma
+# Date: November 2025
+# -----------------------------------------------------------
+
+# A simple Python program that takes student names and marks,
+# calculates statistics, assigns grades, and displays results
+# neatly in tabular form.
+
+# ---------------- Task 1: Project Setup --------------------
+
+def print_welcome():
+    print("=" * 50)
+    print("        🎓 Welcome to GradeBook Analyzer 🎓")
+    print("=" * 50)
+
+# ---------------- Task 3: Statistical Functions ------------
+
+def calculate_average(marks_dict):
+    total = sum(marks_dict.values())
+    return total / len(marks_dict)
+
+def calculate_median(marks_dict):
+    marks = sorted(marks_dict.values())
+    n = len(marks)
+    mid = n // 2
+    if n % 2 == 0:
+        return (marks[mid - 1] + marks[mid]) / 2
+    else:
+        return marks[mid]
+
+def find_max_score(marks_dict):
+    return max(marks_dict.values())
+
+def find_min_score(marks_dict):
+    return min(marks_dict.values())
+
+# ---------------- Task 4: Grade Assignment -----------------
+
+def assign_grades(marks_dict):
+    grades = {}
+    for name, mark in marks_dict.items():
+        if mark >= 90:
+            grades[name] = 'A'
+        elif mark >= 80:
+            grades[name] = 'B'
+        elif mark >= 70:
+            grades[name] = 'C'
+        elif mark >= 60:
+            grades[name] = 'D'
+        else:
+            grades[name] = 'F'
+    return grades
+
+def count_grade_distribution(grades_dict):
+    distribution = {'A':0, 'B':0, 'C':0, 'D':0, 'F':0}
+    for grade in grades_dict.values():
+        if grade in distribution:
+            distribution[grade] += 1
+    return distribution
+
+# ---------------- Task 5: Pass/Fail Filter -----------------
+
+def pass_fail_lists(marks_dict):
+    passed_students = [name for name, m in marks_dict.items() if m >= 40]
+    failed_students = [name for name, m in marks_dict.items() if m < 40]
+    return passed_students, failed_students
+
+# ---------------- Task 6: Display Results ------------------
+
+def display_results_table(marks_dict, grades_dict):
+    print("\n{:<15} {:<10} {:<10}".format("Name", "Marks", "Grade"))
+    print("-" * 35)
+    for name in marks_dict:
+        print("{:<15} {:<10} {:<10}".format(name, marks_dict[name], grades_dict[name]))
+    print("-" * 35)
+
+# ---------------- Main Program -----------------------------
+
+def main():
+    print_welcome()
+    
+    # Predefined student marks (manual input simulated)
+    marks = {
+        "Ayush": 76,
+        "Shikha": 89,
+        "Anish": 55,
+        "Dhruv": 92,
+        "Daksh": 38
+    }
+
+    print("\nStudent data loaded successfully!")
+    print("Names:", list(marks.keys()))
+
+    # Perform statistical analysis
+    avg = calculate_average(marks)
+    med = calculate_median(marks)
+    max_score = find_max_score(marks)
+    min_score = find_min_score(marks)
+
+    print("\n--- Statistics ---")
+    print(f"Average Marks: {avg:.2f}")
+    print(f"Median Marks : {med:.2f}")
+    print(f"Highest Marks: {max_score}")
+    print(f"Lowest Marks : {min_score}")
+
+    # Assign Grades
+    grades = assign_grades(marks)
+    grade_count = count_grade_distribution(grades)
+
+    print("\n--- Grade Distribution ---")
+    for g, c in grade_count.items():
+        print(f"Grade {g}: {c} student(s)")
+
+    # Pass / Fail
+    passed, failed = pass_fail_lists(marks)
+    print("\n--- Pass/Fail Summary ---")
+    print(f"Passed Students ({len(passed)}): {passed}")
+    print(f"Failed Students ({len(failed)}): {failed}")
+
+    # Display Results Table
+    print("\n--- Final Results ---")
+    display_results_table(marks, grades)
+
+    print("\nAnalysis completed successfully! ✅")
+
+# Entry point
+if __name__ == "__main__":
+    main()
